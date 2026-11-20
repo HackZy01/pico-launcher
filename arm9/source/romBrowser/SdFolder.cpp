@@ -1,5 +1,6 @@
 #include "common.h"
 #include <string.h>
+#include <strings.h>
 #include <algorithm>
 #include "FileType/Nds/NdsFileType.h"
 #include "GameEdition.h"
@@ -15,6 +16,13 @@ SdFolder::~SdFolder()
     free(_files);
 }
 
+/// @brief Names that are never shown in the rom browser, regardless of the hidden files setting.
+static bool IsAlwaysHiddenName(const char* name)
+{
+    return strcasecmp(name, "LAUNCHER.NDS") == 0
+        || strcasecmp(name, "_pico") == 0;
+}
+
 std::unique_ptr<const FileInfo*[]> SdFolder::FilterAndSort(
     const SdFolderFilterSortParams& filterSortParams, u32& resultCount) const
 {
@@ -27,6 +35,7 @@ std::unique_ptr<const FileInfo*[]> SdFolder::FilterAndSort(
         auto classification = file->GetFileType()->GetClassification();
         if (classification != FileTypeClassification::Unknown &&
             !file->IsEditionVariant() &&
+            !IsAlwaysHiddenName(file->GetFileName()) &&
             (!isHidden || filterSortParams.includeHiddenFiles))
         {
             sortedFilteredFiles[filteredCount++] = file;
