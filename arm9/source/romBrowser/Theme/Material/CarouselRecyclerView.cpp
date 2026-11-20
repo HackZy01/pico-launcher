@@ -16,9 +16,9 @@
 
 #define COVER_SPACING           4
 #define Y_OFFSET                56
-#define CORNER_RADIUS           18
+#define CORNER_RADIUS           8
 #define SELECTED_COVER_WIDTH    COVER_WIDTH
-#define SELECTED_COVER_X        46
+#define SELECTED_COVER_X        ((256 - SELECTED_COVER_WIDTH) / 2)
 #define NEXT_COVER_WIDTH        54
 #define NEXT_COVER_X            (SELECTED_COVER_X + SELECTED_COVER_WIDTH + COVER_SPACING)
 #define SMALL_COVER_WIDTH       36
