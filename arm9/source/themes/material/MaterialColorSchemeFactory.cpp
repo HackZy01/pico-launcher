@@ -31,10 +31,10 @@ void MaterialColorSchemeFactory::FromPrimaryColor(const Rgb<8, 8, 8>& primaryCol
     materialColorScheme.onPrimary = MaterialArgbToRgb888(scheme.on_primary);
     materialColorScheme.secondaryContainer = MaterialArgbToRgb888(scheme.secondary_container);
     materialColorScheme.onSecondaryContainer = MaterialArgbToRgb888(scheme.on_secondary_container);
-    materialColorScheme.tertiary = MaterialArgbToRgb888(scheme.tertiary);
-    materialColorScheme.onTertiary = MaterialArgbToRgb888(scheme.on_tertiary);
-    materialColorScheme.tertiaryContainer = MaterialArgbToRgb888(scheme.tertiary_container);
-    materialColorScheme.onTertiaryContainer = MaterialArgbToRgb888(scheme.on_tertiary_container);
+    materialColorScheme.tertiary            = MaterialArgbToRgb888(p.get(darkTheme ? 80.0 : 40.0));
+    materialColorScheme.onTertiary          = MaterialArgbToRgb888(p.get(darkTheme ? 20.0 : 100.0));
+    materialColorScheme.tertiaryContainer   = MaterialArgbToRgb888(p.get(darkTheme ? 30.0 : 90.0));
+    materialColorScheme.onTertiaryContainer = MaterialArgbToRgb888(p.get(darkTheme ? 90.0 : 10.0));
     materialColorScheme.inverseOnSurface = MaterialArgbToRgb888(darkTheme ? corePalette.neutral().get(10.0) : scheme.inverse_on_surface);
     materialColorScheme.onSurface = MaterialArgbToRgb888(scheme.on_surface);
     materialColorScheme.onSurfaceVariant = MaterialArgbToRgb888(scheme.on_surface_variant);
