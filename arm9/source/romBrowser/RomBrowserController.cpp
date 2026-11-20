@@ -42,6 +42,26 @@ void RomBrowserController::HideGameInfo()
     _stateMachine.Fire(RomBrowserStateTrigger::HideGameInfo);
 }
 
+void RomBrowserController::ShowEditionSelect(const FileInfo& fileInfo)
+{
+    const FileInfo* variant = fileInfo.GetEditionVariant();
+    if (variant == nullptr)
+    {
+        // nothing to choose from
+        LaunchFile(fileInfo);
+        return;
+    }
+
+    _triggerFileInfo = FileInfo(fileInfo);
+    _editionVariantFileInfo = FileInfo(*variant);
+    _stateMachine.Fire(RomBrowserStateTrigger::ShowEditionSelect);
+}
+
+void RomBrowserController::HideEditionSelect()
+{
+    _stateMachine.Fire(RomBrowserStateTrigger::HideEditionSelect);
+}
+
 void RomBrowserController::ShowDisplaySettings()
 {
     _stateMachine.Fire(RomBrowserStateTrigger::ShowDisplaySettings);

@@ -28,6 +28,8 @@ public:
     void LaunchFile(const FileInfo& fileInfo) override;
     void ShowGameInfo(const FileInfo& fileInfo) override;
     void HideGameInfo() override;
+    void ShowEditionSelect(const FileInfo& fileInfo) override;
+    void HideEditionSelect() override;
     void ShowDisplaySettings() override;
     void HideDisplaySettings() override;
     void GotoSettingsScreen() override;
@@ -55,6 +57,7 @@ public:
     }
 
     virtual const FileInfo& GetTriggerFileInfo() const override { return _triggerFileInfo; }
+    virtual const FileInfo& GetEditionVariantFileInfo() const override { return _editionVariantFileInfo; }
 
 private:
     IAppSettingsService* _appSettingsService;
@@ -68,6 +71,7 @@ private:
     TCHAR _navigatePath[256];
     TCHAR* _navigateFileName;
     FileInfo _triggerFileInfo;
+    FileInfo _editionVariantFileInfo;
     QueueTask<void> _navigateTask;
     bool _saveSettingsPending = false;
     std::unique_ptr<CoverRepository> _coverRepository;

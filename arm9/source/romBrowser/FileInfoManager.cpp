@@ -83,11 +83,10 @@ int FileInfoManager::GetItemIndex(const char* fileName)
         }
 
         // The variant edition is hidden, so when it is the requested file (e.g. the last launched
-        // file was "Game_pl.nds") select its base file and switch it to the variant edition.
+        // file was "Game_pl.nds") select its base file instead.
         const FileInfo* variant = _items[i]->GetEditionVariant();
         if (variant && strcmp(fileName, variant->GetFileName()) == 0)
         {
-            _items[i]->SelectEditionVariant(true);
             return i;
         }
     }

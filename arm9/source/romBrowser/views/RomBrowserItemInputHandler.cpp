@@ -19,15 +19,6 @@ bool RomBrowserItemInputHandler::HandleInput(const InputProvider& inputProvider,
         _viewModel->ShowGameInfo();
         return true;
     }
-    else if (inputProvider.Triggered(InputKey::L))
-    {
-        // only handled for items with an edition variant, otherwise L falls through to paging
-        return _viewModel->SelectEdition(false);
-    }
-    else if (inputProvider.Triggered(InputKey::R))
-    {
-        return _viewModel->SelectEdition(true);
-    }
     else
     {
         return false;

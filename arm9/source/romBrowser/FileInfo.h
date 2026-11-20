@@ -21,7 +21,6 @@ public:
             _fastFileRef = rhs._fastFileRef;
             _editionVariant = nullptr;
             _isEditionVariant = false;
-            _editionVariantSelected = false;
         }
 
         return *this;
@@ -53,27 +52,6 @@ public:
     void SetEditionVariant(const FileInfo* variant) { _editionVariant = variant; }
     void SetIsEditionVariant(bool isVariant) { _isEditionVariant = isVariant; }
 
-    bool IsEditionVariantSelected() const { return _editionVariant && _editionVariantSelected; }
-
-    /// @brief Selects which edition is launched. Does nothing when there is no variant.
-    void SelectEditionVariant(bool selected) const
-    {
-        if (_editionVariant)
-            _editionVariantSelected = selected;
-    }
-
-    /// @brief Returns -1 when there is no variant, 0 when the original is selected, or 1 when the variant is selected.
-    int GetEditionState() const
-    {
-        return _editionVariant ? (_editionVariantSelected ? 1 : 0) : -1;
-    }
-
-    /// @brief Gets the file that should actually be launched: the variant when it is selected, otherwise this file.
-    const FileInfo& GetActiveFile() const
-    {
-        return IsEditionVariantSelected() ? *_editionVariant : *this;
-    }
-
 private:
     std::unique_ptr<TCHAR[]> _name;
     const FileType* _type;
@@ -81,5 +59,4 @@ private:
     u8 _attributes;
     const FileInfo* _editionVariant = nullptr; // not owned, points to another FileInfo in the same SdFolder
     bool _isEditionVariant = false;
-    mutable bool _editionVariantSelected = false;
 };

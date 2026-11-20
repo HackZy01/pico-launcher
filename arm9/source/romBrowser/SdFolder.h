@@ -29,7 +29,7 @@ public:
         const SdFolderFilterSortParams& filterSortParams, u32& resultCount) const;
 
     /// @brief Links "Name.ext" files to their "Name<suffix>.ext" edition variant (see GameEdition.h), when both exist.
-    ///        The variant file is then hidden by FilterAndSort() and reachable via FileInfo::GetActiveFile().
+    ///        The variant file is then hidden by FilterAndSort() and reachable via FileInfo::GetEditionVariant().
     void LinkEditionVariants();
 
     void SortByNameInPlace();

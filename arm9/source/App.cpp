@@ -22,6 +22,8 @@
 #include "romBrowser/views/NdsGameDetailsBottomSheetView.h"
 #include "romBrowser/views/cheats/CheatsBottomSheetView.h"
 #include "romBrowser/views/DisplaySettingsBottomSheetView.h"
+#include "romBrowser/views/EditionSelectBottomSheetView.h"
+#include "romBrowser/viewModels/EditionSelectViewModel.h"
 #include "bgm/AudioStreamPlayer.h"
 #include "bgm/BgmService.h"
 #include "themes/ThemeInfoFactory.h"
@@ -249,9 +251,24 @@ void App::HandleTrigger(RomBrowserStateTrigger trigger, RomBrowserState newState
     switch (trigger)
     {
         case RomBrowserStateTrigger::None:
-        case RomBrowserStateTrigger::Launch:
         case RomBrowserStateTrigger::GotoSettingsScreen:
         {
+            break;
+        }
+        case RomBrowserStateTrigger::Launch:
+        {
+            // closes the edition select popup when the launch was started from it
+            _dialogPresenter.CloseDialog();
+            break;
+        }
+        case RomBrowserStateTrigger::ShowEditionSelect:
+        {
+            HandleShowEditionSelectTrigger();
+            break;
+        }
+        case RomBrowserStateTrigger::HideEditionSelect:
+        {
+            HandleHideEditionSelectTrigger();
             break;
         }
         case RomBrowserStateTrigger::ShowGameInfo:
@@ -321,6 +338,21 @@ void App::HandleShowDisplaySettingsTrigger()
 }
 
 void App::HandleHideDisplaySettingsTrigger()
+{
+    _dialogPresenter.CloseDialog();
+    if (!_dialogPresenter.GetOldFocus())
+        _romBrowserBottomScreenView->Focus(_focusManager);
+}
+
+void App::HandleShowEditionSelectTrigger()
+{
+    auto editionSelectViewModel = SharedPtr<EditionSelectViewModel>::MakeShared(&_romBrowserController);
+    auto editionSelectDialog = EditionSelectBottomSheetView::CreateShared(
+        std::move(editionSelectViewModel), &_theme->GetMaterialColorScheme(), _theme->GetFontRepository());
+    _dialogPresenter.ShowDialog(std::move(editionSelectDialog));
+}
+
+void App::HandleHideEditionSelectTrigger()
 {
     _dialogPresenter.CloseDialog();
     if (!_dialogPresenter.GetOldFocus())

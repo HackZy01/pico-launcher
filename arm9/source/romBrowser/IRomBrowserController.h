@@ -22,6 +22,11 @@ public:
     virtual void LaunchFile(const FileInfo& fileInfo) = 0;
     virtual void ShowGameInfo(const FileInfo& fileInfo) = 0;
     virtual void HideGameInfo() = 0;
+
+    /// @brief Shows the edition select popup for a file that has an edition variant (see GameEdition.h).
+    virtual void ShowEditionSelect(const FileInfo& fileInfo) = 0;
+    virtual void HideEditionSelect() = 0;
+
     virtual void ShowDisplaySettings() = 0;
     virtual void HideDisplaySettings() = 0;
     virtual void GotoSettingsScreen() = 0;
@@ -47,6 +52,10 @@ public:
         const RomBrowserDisplaySettings& romBrowserDisplaySettings) = 0;
 
     virtual const FileInfo& GetTriggerFileInfo() const = 0;
+
+    /// @brief Gets the variant edition of the file that the edition select popup was opened for.
+    ///        The original edition is available through GetTriggerFileInfo().
+    virtual const FileInfo& GetEditionVariantFileInfo() const = 0;
 };
 
 inline IRomBrowserController::~IRomBrowserController() { }
