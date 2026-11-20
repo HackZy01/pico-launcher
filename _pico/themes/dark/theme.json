@@ -1,0 +1,12 @@
+{
+    "type": "material",
+    "name": "Ciemny",
+    "description": "Ciemny motyw",
+    "author": "Domyślne",
+    "primaryColor": {
+        "r": 0,
+        "g": 122,
+        "b": 255
+    },
+    "darkTheme": true
+}
