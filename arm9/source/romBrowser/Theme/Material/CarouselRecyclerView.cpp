@@ -264,7 +264,7 @@ void CarouselRecyclerView::HandlePenMove(const Point& touchPoint, FocusManager& 
     }
     else
     {
-        fix32<12> newScrollOffset = _penDownScrollOffset + fix32<12>(_penDownPosition.x - touchPoint.x) * (2.5 / COVER_WIDTH);
+        fix32<12> newScrollOffset = _penDownScrollOffset + fix32<12>(_penDownPosition.x - touchPoint.x) * (1.5 / COVER_WIDTH);
         if (newScrollOffset < 0)
         {
             newScrollOffset = 0;
@@ -326,35 +326,13 @@ void CarouselRecyclerView::UpdateItemPosition(int viewPoolIndex)
     auto& item = _viewPool[viewPoolIndex];
     auto& itemEx = _viewPoolEx[viewPoolIndex];
     int itemIndex = item.itemIdx;
-    fix32<12> absOffsetFromCenter = (itemIndex - _scrollAnimator.GetValue()).Abs();
-    fix32<12> initialOffsetFromCenter = absOffsetFromCenter.Clamp(0, 1);
-    fix32<12> initialOffsetFromNext = (absOffsetFromCenter - 1).Clamp(0, 1);
 
-    fix32<12> x;
-    fix32<12> width;
-    if (itemIndex < _scrollAnimator.GetValue())
-    {
-        // everything before selected
-        x = SELECTED_COVER_X - (SMALL_COVER_WIDTH + COVER_SPACING) * absOffsetFromCenter;
-        width = Interpolator::InterpolateLinear<fix32<12>>(SELECTED_COVER_WIDTH, SMALL_COVER_WIDTH, initialOffsetFromCenter);
-    }
-    else if (initialOffsetFromCenter < 1)
-    {
-        // from selected to next
-        x = Interpolator::InterpolateLinear<fix32<12>>(SELECTED_COVER_X, NEXT_COVER_X, initialOffsetFromCenter);
-        width = Interpolator::InterpolateLinear<fix32<12>>(SELECTED_COVER_WIDTH, NEXT_COVER_WIDTH, initialOffsetFromCenter);
-    }
-    else
-    {
-        // everything after next
-        x = NEXT_COVER_X
-            + Interpolator::InterpolateLinear<fix32<12>>(0, NEXT_COVER_WIDTH + COVER_SPACING, initialOffsetFromNext);
-        if (absOffsetFromCenter - 2 > 0)
-        {
-            x = x + (SMALL_COVER_WIDTH + COVER_SPACING) * (absOffsetFromCenter - 2);
-        }
-        width = Interpolator::InterpolateLinear<fix32<12>>(NEXT_COVER_WIDTH, SMALL_COVER_WIDTH, initialOffsetFromNext);
-    }
+    // every cover keeps its full width; the scroll offset only moves it sideways
+    fix32<12> offsetFromCenter = itemIndex - _scrollAnimator.GetValue();
+
+    itemEx.xPosition = SELECTED_COVER_X + (SELECTED_COVER_WIDTH + COVER_SPACING) * offsetFromCenter;
+    itemEx.width = SELECTED_COVER_WIDTH;
+}
 
     itemEx.xPosition = x;
     itemEx.width = width;
