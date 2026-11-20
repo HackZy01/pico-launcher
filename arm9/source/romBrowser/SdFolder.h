@@ -28,6 +28,10 @@ public:
     std::unique_ptr<const FileInfo*[]> FilterAndSort(
         const SdFolderFilterSortParams& filterSortParams, u32& resultCount) const;
 
+    /// @brief Links "Name.ext" files to their "Name<suffix>.ext" edition variant (see GameEdition.h), when both exist.
+    ///        The variant file is then hidden by FilterAndSort() and reachable via FileInfo::GetActiveFile().
+    void LinkEditionVariants();
+
     void SortByNameInPlace();
     const FileInfo* BinarySearch(const char* fileName) const;
 

@@ -15,7 +15,8 @@ void RomBrowserItemViewModel::Activate()
         }
         else
         {
-            _romBrowserController->LaunchFile(item);
+            // launches the variant edition when that is the selected one
+            _romBrowserController->LaunchFile(item.GetActiveFile());
         }
     }
 }
@@ -27,7 +28,20 @@ void RomBrowserItemViewModel::ShowGameInfo()
         const auto& item = _romBrowserController->GetRomBrowserViewModel()->GetFileInfoManager().GetItem(_index);
         if (item.GetFileType() == &NdsFileType::sInstance)
         {
-            _romBrowserController->ShowGameInfo(item);
+            _romBrowserController->ShowGameInfo(item.GetActiveFile());
         }
     }
+}
+
+bool RomBrowserItemViewModel::SelectEdition(bool useVariant)
+{
+    if (_index < 0)
+        return false;
+
+    const auto& item = _romBrowserController->GetRomBrowserViewModel()->GetFileInfoManager().GetItem(_index);
+    if (!item.HasEditionVariant())
+        return false;
+
+    item.SelectEditionVariant(useVariant);
+    return true;
 }

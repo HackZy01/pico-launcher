@@ -9,6 +9,8 @@
 #include "gui/IVramManager.h"
 #include "themes/material/MaterialColorScheme.h"
 #include "../Theme/IRomBrowserViewFactory.h"
+#include "../GameEdition.h"
+#include "core/StringUtil.h"
 #include "RomBrowserTopScreenView.h"
 
 RomBrowserTopScreenView::RomBrowserTopScreenView(
@@ -77,7 +79,9 @@ void RomBrowserTopScreenView::Update()
                 _iconGraphicsUploaded = false;
             }
             _fileInfoView->SetIcon(std::move(_selectedFileIcon));
-            _fileInfoView->SetFileNameAsync(_viewModel->GetBgTaskQueue(), item.GetFileName(), fileNameAsTitle);
+            _lastFileNameAsTitle = fileNameAsTitle;
+            _lastEditionState = item.GetEditionState();
+            UpdateFileName(item, fileNameAsTitle);
 
             _lastSelectedItem = selectedItem;
 
@@ -89,7 +93,39 @@ void RomBrowserTopScreenView::Update()
             }
         }
     }
+    else if (selectedItem >= 0 && selectedItem == _lastSelectedItem)
+    {
+        // The edition was switched with L/R: only the file name line (with the indicator) changes.
+        auto& fileInfoManager = _viewModel->GetFileInfoManager();
+        const auto& item = fileInfoManager.GetItem(selectedItem);
+        if (item.GetEditionState() != _lastEditionState)
+        {
+            _lastEditionState = item.GetEditionState();
+            UpdateFileName(item, _lastFileNameAsTitle);
+        }
+    }
     ViewContainer::Update();
+}
+
+void RomBrowserTopScreenView::UpdateFileName(const FileInfo& item, bool fileNameAsTitle)
+{
+    // shows the name of the file that will actually be launched
+    const TCHAR* fileName = item.GetActiveFile().GetFileName();
+    if (!item.HasEditionVariant())
+    {
+        _fileInfoView->SetFileNameAsync(_viewModel->GetBgTaskQueue(), fileName, fileNameAsTitle);
+        return;
+    }
+
+    // The indicator goes in front of the file name so that it stays visible while the name scrolls.
+    // The selected edition is shown between brackets, matching the L (original) and R (variant) buttons.
+    TCHAR buffer[320];
+    StringUtil::Copy(buffer, item.IsEditionVariantSelected()
+        ? "< " EDITION_ORIGINAL_LABEL "  [" EDITION_VARIANT_LABEL "] >  "
+        : "< [" EDITION_ORIGINAL_LABEL "]  " EDITION_VARIANT_LABEL " >  ",
+        sizeof(buffer) / sizeof(buffer[0]));
+    strlcat(buffer, fileName, sizeof(buffer) / sizeof(buffer[0]));
+    _fileInfoView->SetFileNameAsync(_viewModel->GetBgTaskQueue(), buffer, fileNameAsTitle);
 }
 
 void RomBrowserTopScreenView::VBlank()

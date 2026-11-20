@@ -191,6 +191,10 @@ void RomBrowserController::HandleNavigateTrigger()
         f_chdir(_navigatePath);
         SdFolderFactory sdFolderFactory { &_fileTypeProvider };
         _newSdFolder = sdFolderFactory.CreateFromPath(".");
+        if (_newSdFolder)
+        {
+            _newSdFolder->LinkEditionVariants();
+        }
         u64 endTick = gTickCounter.GetValue();
         LOG_DEBUG("Loading files in folder took: %d us\n", (u32)TickCounter::TicksToMicroSeconds(endTick - startTick));
         return TaskResult<void>::Completed();

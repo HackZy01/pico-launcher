@@ -8,6 +8,7 @@
 
 class RomBrowserViewModel;
 class IRomBrowserViewFactory;
+class FileInfo;
 
 class RomBrowserTopScreenView : public ViewContainer
 {
@@ -30,10 +31,14 @@ private:
     std::unique_ptr<FileIcon> _selectedFileIcon;
     SharedPtr<FileCover> _selectedFileCover;
     int _lastSelectedItem = -1;
+    int _lastEditionState = -1;
+    bool _lastFileNameAsTitle = true;
     bool _iconGraphicsUploaded = false;
     bool _coverGraphicsUploaded = false;
     bool _showCover;
     Point _coverPosition;
+
+    void UpdateFileName(const FileInfo& item, bool fileNameAsTitle);
 
     RomBrowserTopScreenView(SharedPtr<RomBrowserViewModel> viewModel,
         const RomBrowserDisplayMode* displayMode,

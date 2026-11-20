@@ -19,6 +19,9 @@ public:
             _name = std::move(rhs._name);
             _type = rhs._type;
             _fastFileRef = rhs._fastFileRef;
+            _editionVariant = nullptr;
+            _isEditionVariant = false;
+            _editionVariantSelected = false;
         }
 
         return *this;
@@ -39,9 +42,44 @@ public:
     bool IsHidden() const { return _attributes & AM_HID; }
     bool IsSystem() const { return _attributes & AM_SYS; }
 
+    /// @brief Whether this file has an edition variant (e.g. "Game_pl.nds" for "Game.nds").
+    bool HasEditionVariant() const { return _editionVariant != nullptr; }
+
+    /// @brief Whether this file is the variant edition of another file in the same folder.
+    ///        Such files are hidden from the browser and reached through their base file.
+    bool IsEditionVariant() const { return _isEditionVariant; }
+
+    const FileInfo* GetEditionVariant() const { return _editionVariant; }
+    void SetEditionVariant(const FileInfo* variant) { _editionVariant = variant; }
+    void SetIsEditionVariant(bool isVariant) { _isEditionVariant = isVariant; }
+
+    bool IsEditionVariantSelected() const { return _editionVariant && _editionVariantSelected; }
+
+    /// @brief Selects which edition is launched. Does nothing when there is no variant.
+    void SelectEditionVariant(bool selected) const
+    {
+        if (_editionVariant)
+            _editionVariantSelected = selected;
+    }
+
+    /// @brief Returns -1 when there is no variant, 0 when the original is selected, or 1 when the variant is selected.
+    int GetEditionState() const
+    {
+        return _editionVariant ? (_editionVariantSelected ? 1 : 0) : -1;
+    }
+
+    /// @brief Gets the file that should actually be launched: the variant when it is selected, otherwise this file.
+    const FileInfo& GetActiveFile() const
+    {
+        return IsEditionVariantSelected() ? *_editionVariant : *this;
+    }
+
 private:
     std::unique_ptr<TCHAR[]> _name;
     const FileType* _type;
     FastFileRef _fastFileRef;
     u8 _attributes;
+    const FileInfo* _editionVariant = nullptr; // not owned, points to another FileInfo in the same SdFolder
+    bool _isEditionVariant = false;
+    mutable bool _editionVariantSelected = false;
 };

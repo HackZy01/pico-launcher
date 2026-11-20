@@ -11,6 +11,7 @@ public:
 
     void Activate() override;
     void ShowGameInfo() override;
+    bool SelectEdition(bool useVariant) override;
 
     void SetIndex(int index) override
     {
