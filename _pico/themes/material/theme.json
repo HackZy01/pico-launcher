@@ -1,11 +1,11 @@
 {
     "type": "material",
-    "name": "Cupertino",
-    "description": "Motyw zainspirowany codziennością",
+    "name": "Jasny",
+    "description": "Jasny motyw",
     "author": "bit",
     "primaryColor": {
         "r": 0,
-        "g": 122,
+        "g": 136,
         "b": 255
     },
     "darkTheme": false
