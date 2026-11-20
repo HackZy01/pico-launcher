@@ -4,8 +4,8 @@
     "description": "Ciemny motyw",
     "author": "Domyślne",
     "primaryColor": {
-        "r": 0,
-        "g": 122,
+        "r": 105,
+        "g": 205,
         "b": 255
     },
     "darkTheme": true
