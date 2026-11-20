@@ -22,6 +22,8 @@
 #include "themes/IFontRepository.h"
 #include "DisplaySettingsBottomSheetView.h"
 
+#define OPTIONS_X           90   // "Sortowanie" ends at x=75
+
 #define TITLE_LABEL_X       20
 #define TITLE_LABEL_Y       16
 
@@ -173,7 +175,7 @@ void DisplaySettingsBottomSheetView::Update()
     _themeButton->SetPosition(THEME_BUTTON_X, _position.y + THEME_BUTTON_Y);
     UpdateLabels();
     auto selectedDisplayMode = _viewModel->GetRomBrowserDisplayMode();
-    int x = 70;
+    int x = OPTIONS_X; // Space for polish
     u32 idx = 0;
     for (auto& layoutOption : _layoutOptions)
     {
@@ -185,7 +187,7 @@ void DisplaySettingsBottomSheetView::Update()
         idx++;
     }
     auto selectedSortMode = _viewModel->GetRomBrowserSortMode();
-    x = 70;
+    int x = OPTIONS_X; // Space for polish
     idx = 0;
     for (auto& sortOption : _sortOptions)
     {
