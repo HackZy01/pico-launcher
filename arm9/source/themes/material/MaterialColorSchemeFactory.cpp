@@ -31,6 +31,7 @@ void MaterialColorSchemeFactory::FromPrimaryColor(const Rgb<8, 8, 8>& primaryCol
     materialColorScheme.onPrimary = MaterialArgbToRgb888(scheme.on_primary);
     materialColorScheme.secondaryContainer = MaterialArgbToRgb888(scheme.secondary_container);
     materialColorScheme.onSecondaryContainer = MaterialArgbToRgb888(scheme.on_secondary_container);
+    auto& p = corePalette.primary();
     materialColorScheme.tertiary            = MaterialArgbToRgb888(p.get(darkTheme ? 80.0 : 40.0));
     materialColorScheme.onTertiary          = MaterialArgbToRgb888(p.get(darkTheme ? 20.0 : 100.0));
     materialColorScheme.tertiaryContainer   = MaterialArgbToRgb888(p.get(darkTheme ? 30.0 : 90.0));
