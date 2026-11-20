@@ -333,7 +333,3 @@ void CarouselRecyclerView::UpdateItemPosition(int viewPoolIndex)
     itemEx.xPosition = SELECTED_COVER_X + (SELECTED_COVER_WIDTH + COVER_SPACING) * offsetFromCenter;
     itemEx.width = SELECTED_COVER_WIDTH;
 }
-
-    itemEx.xPosition = x;
-    itemEx.width = width;
-}
