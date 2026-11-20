@@ -1,11 +1,11 @@
 {
     "type": "material",
-    "name": "Material Design 3",
-    "description": "Theme based on Google's Material Design 3.",
-    "author": "Gericom",
+    "name": "Cupertino",
+    "description": "Motyw zainspirowany codziennością",
+    "author": "bit",
     "primaryColor": {
-        "r": 138,
-        "g": 217,
+        "r": 0,
+        "g": 122,
         "b": 255
     },
     "darkTheme": false
