@@ -12,8 +12,8 @@ export LIBTWL           ?= $(shell pwd)/libs/libtwl
 
 NAME		:= 	LAUNCHER
 
-GAME_TITLE	:= Pico Launcher
-GAME_AUTHOR	:= LNH team
+GAME_TITLE	:= Pokémon Launcher
+GAME_AUTHOR	:= Gamefreak
 GAME_ICON	:= icon.bmp
 
 # DLDI and internal SD slot of DSi
