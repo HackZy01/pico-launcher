@@ -52,8 +52,8 @@ CheatsBottomSheetView::CheatsBottomSheetView(SharedPtr<CheatsViewModel> viewMode
     , _fontRepository(fontRepository)
     , _focusManager(focusManager)
 {
-    _titleLabel->SetText(u"Cheats");
-    _secondaryLabel->SetText(u"No cheats found.");
+    _titleLabel->SetText(u"Cheaty");
+    _secondaryLabel->SetText(u"Nie znaleziono cheatów.");
     _secondaryLabel->SetEllipsisStyle(LabelView::EllipsisStyle::Ellipsis);
     _descriptionLabel->SetEllipsisStyle(LabelView::EllipsisStyle::Marquee);
     _descriptionLabel->SetText(u"");
