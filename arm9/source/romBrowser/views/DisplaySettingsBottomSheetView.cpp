@@ -187,7 +187,7 @@ void DisplaySettingsBottomSheetView::Update()
         idx++;
     }
     auto selectedSortMode = _viewModel->GetRomBrowserSortMode();
-    int x = OPTIONS_X; // Space for polish
+    x = OPTIONS_X; // Space for polish
     idx = 0;
     for (auto& sortOption : _sortOptions)
     {
